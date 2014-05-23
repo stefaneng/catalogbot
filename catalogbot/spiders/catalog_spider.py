@@ -2,7 +2,6 @@ from scrapy.spider import Spider
 from scrapy.http import Request
 from scrapy.selector import Selector
 from catalogbot.items import CourseItem
-import re
 
 class CatalogSpider(Spider):
     name = "catalog"
@@ -11,11 +10,25 @@ class CatalogSpider(Spider):
         "http://catalog.csun.edu/"
     ]
 
-    def parse_title(self, title):
-        return title
+    def parse_title(self, courseitem, title):
+        """
+        Take a class title and divide into courseitem
+        """
 
-    def parse_body(self, body):
-        return body
+        split_title = title.split(' ')
+        classname = " ".join(split_title[:2]).strip('.')
+        rest_title = " ".join(split_title[2:])
+
+        (dep, number) = classname.split(' ')
+
+        courseitem['classname'] = classname
+        courseitem['department'] = dep
+        courseitem['number'] = number
+
+        return courseitem
+
+    def parse_body(self, courseitem, body):
+        return courseitem
 
     def parse_course(self, response):
         sel = Selector(response)
@@ -29,8 +42,8 @@ class CatalogSpider(Spider):
             # Get the course body
             body = course_title_sel.xpath('following-sibling::p/text()').extract()[0]
 
-            course['title'] = self.parse_title(title)
-            course['body'] = self.parse_body(body)
+            course = self.parse_title(course, title)
+            course = self.parse_body(course, body)
 
             yield course
 

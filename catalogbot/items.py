@@ -9,6 +9,11 @@ class CourseItem(Item):
     title = Field()
     body = Field()
 
+    classname = Field()
+    department = Field()
+    number = Field()
+    units = Field()
+
     #name = Field()
     #number = Field()
     #units = Field()
