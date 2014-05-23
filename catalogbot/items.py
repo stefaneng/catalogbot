@@ -5,7 +5,10 @@
 
 from scrapy.item import Item, Field
 
-class CatalogbotItem(Item):
-    # define the fields for your item here like:
-    # name = Field()
-    pass
+class CourseItem(Item):
+    name = Field()
+    number = Field()
+    units = Field()
+    prereqs = Field()
+    coreqs = Field()
+    statisfies = Field()
