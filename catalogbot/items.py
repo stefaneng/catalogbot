@@ -6,9 +6,13 @@
 from scrapy.item import Item, Field
 
 class CourseItem(Item):
-    name = Field()
-    number = Field()
-    units = Field()
-    prereqs = Field()
-    coreqs = Field()
-    statisfies = Field()
+    title = Field()
+    body = Field()
+
+    #name = Field()
+    #number = Field()
+    #units = Field()
+    #department = Field()
+    #prereqs = Field()
+    #coreqs = Field()
+    #statisfies = Field()

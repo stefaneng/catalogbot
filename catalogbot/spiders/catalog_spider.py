@@ -11,18 +11,28 @@ class CatalogSpider(Spider):
         "http://catalog.csun.edu/"
     ]
 
+    def parse_title(self, title):
+        return title
+
+    def parse_body(self, body):
+        return body
+
     def parse_course(self, response):
         sel = Selector(response)
 
         for course_title_sel in sel.xpath('//div[@id="courses"]/h4'):
             course = CourseItem()
-            # Get the title line from the <h4>'s
+
+            # Get the title line of course from the <h4>'s
             title = course_title_sel.xpath('text()').extract()[0]
 
             # Get the course body
-            body = course_title_sel.xpath('following-sibling::p[2]/text()').extract()
+            body = course_title_sel.xpath('following-sibling::p/text()').extract()[0]
 
-            print title, body
+            course['title'] = self.parse_title(title)
+            course['body'] = self.parse_body(body)
+
+            yield course
 
     def parse(self, response):
         sel = Selector(response)
