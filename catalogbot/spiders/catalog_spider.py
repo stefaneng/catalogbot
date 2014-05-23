@@ -2,6 +2,7 @@ from scrapy.spider import Spider
 from scrapy.http import Request
 from scrapy.selector import Selector
 from catalogbot.items import CourseItem
+import re
 
 class CatalogSpider(Spider):
     name = "catalog"
@@ -18,12 +19,18 @@ class CatalogSpider(Spider):
         split_title = title.split(' ')
         classname = " ".join(split_title[:2]).strip('.')
         rest_title = " ".join(split_title[2:])
+        longname = rest_title.split('(')[0].strip()
+
+        m = re.search('\((.*)\)', rest_title)
+        if m:
+            courseitem['units'] = m.group(1)
 
         (dep, number) = classname.split(' ')
 
         courseitem['classname'] = classname
         courseitem['department'] = dep
         courseitem['number'] = number
+        courseitem['longname'] = longname
 
         return courseitem
 

@@ -12,6 +12,7 @@ class CourseItem(Item):
     classname = Field()
     department = Field()
     number = Field()
+    longname = Field()
     units = Field()
 
     #name = Field()
