@@ -21,7 +21,7 @@ class CatalogSpider(Spider):
         rest_title = " ".join(split_title[2:])
         longname = rest_title.split('(')[0].strip()
 
-        m = re.search('\((.*)\)', rest_title)
+        m = re.search(r'\((.*)\)', rest_title)
         if m:
             courseitem['units'] = m.group(1)
 
@@ -35,6 +35,7 @@ class CatalogSpider(Spider):
         return courseitem
 
     def parse_body(self, courseitem, body):
+        courseitem['description'] = body
         return courseitem
 
     def parse_course(self, response):
