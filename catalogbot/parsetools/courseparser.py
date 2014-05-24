@@ -60,7 +60,7 @@ def parse_prereqs(courseitem, body):
     return courseitem
 
 def parse_prereqs_body(body):
-    m = re.search(r'Prerequisites:(.*?)\.', body)
+    m = re.search(r'Prerequisites{0,1}:.*?\.', body)
     if m is not None:
         return m.group(0)
     else:
@@ -68,5 +68,9 @@ def parse_prereqs_body(body):
 
 
 def parse_body(courseitem, body):
+    m = re.search(r'Prerequisites{0,1}:.*?\.\ (.*)', body)
+    if m is not None:
+        body = m.group(1)
+
     courseitem['description'] = body
     return courseitem
