@@ -2,7 +2,6 @@
 Assists in parsing text from the course pages.
 """
 import re
-from catalogbot.items import CourseItem
 
 def parse_title(courseitem, title):
     """
@@ -31,6 +30,15 @@ def parse_title(courseitem, title):
 
     return courseitem
 
+def parse_comma_string(comma_string):
+    components = comma_string.split(',')
+    first = components[0]
+    name = first.split(' ')[0]
+
+    name_number_list = [first] + [''.join([name, comp]) for comp in components[1:]]
+
+    return name_number_list
+
 def parse_em(courseitem, em_string):
     m = re.search(r':(.*?)\.', em_string)
     if m:
@@ -38,11 +46,8 @@ def parse_em(courseitem, em_string):
     else:
         return courseitem
 
-    components = preq_string.split(',')
-    first = components[0]
-    course = first.split(' ')[0]
+    prereqs = parse_comma_string(em_string)
 
-    prereqs = [first] + [''.join([course, comp]) for comp in components[1:]]
     courseitem['prereqs'] = prereqs
 
     return courseitem
