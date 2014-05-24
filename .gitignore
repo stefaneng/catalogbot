@@ -2,3 +2,5 @@
 build/
 *-info/
 dist/
+.coverage
+*.json

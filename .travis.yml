@@ -9,7 +9,7 @@ install:
 
 script:
   - nosetests
-  - coverage report
+  - coverage report -m
 
 after_script:
   - coveralls --verbose
