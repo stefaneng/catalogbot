@@ -2,7 +2,7 @@ from scrapy.spider import Spider
 from scrapy.http import Request
 from scrapy.selector import Selector
 from catalogbot.items import CourseItem
-from catalogbot.parsetools.courses import *
+from catalogbot.parsetools.courseparser import *
 
 class CatalogSpider(Spider):
     name = "catalog"
@@ -21,7 +21,14 @@ class CatalogSpider(Spider):
             title = course_title_sel.xpath('text()').extract()[0]
 
             # Get the course body
-            body = course_title_sel.xpath('following-sibling::p/text()').extract()[0]
+            ptag = course_title_sel.xpath('following-sibling::p')
+            em = ptag.xpath('em/text()').extract()
+            pbody = course_title_sel.xpath('following-sibling::p/text()').extract()[0]
+
+            if len(em) > 0:
+                body = em[0] + pbody
+            else:
+                body = pbody
 
             course = parse_title(course, title)
             course = parse_body(course, body)
