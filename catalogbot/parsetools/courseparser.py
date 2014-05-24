@@ -46,7 +46,7 @@ def parse_em(courseitem, em_string):
     else:
         return courseitem
 
-    prereqs = parse_comma_string(em_string)
+    prereqs = parse_comma_string(preq_string)
 
     courseitem['prereqs'] = prereqs
 
