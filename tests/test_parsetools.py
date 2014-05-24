@@ -1,6 +1,16 @@
 from catalogbot.parsetools import courseparser
 from catalogbot.items import CourseItem
 
+def test_parse_body_to_prereqs():
+    """Tests 'Prerequisites: COMP 182/L; MATH 150A; PHIL 230. Study of discrete mathematical structures and proof techniques as used in computer science. Discrete structures, such as functions, relations, sets, graphs and trees. Proof techniques, such as proof by induction, proof by contradiction and proof by cases. Counting techniques. Lab: 3 hours per week.'"""
+
+    body = 'Prerequisites: COMP 182/L; MATH 150A; PHIL 230. Study of discrete mathematical structures and proof techniques as used in computer science. Discrete structures, such as functions, relations, sets, graphs and trees. Proof techniques, such as proof by induction, proof by contradiction and proof by cases. Counting techniques. Lab: 3 hours per week.'
+    target_string = 'Prerequisites: COMP 182/L; MATH 150A; PHIL 230.'
+    out_string = courseparser.parse_prereqs_body(body)
+
+    print target_string, out_string
+    assert target_string == out_string
+
 def test_parse_prereqs():
     """Test parsing of prerequisites 'Prerequisites: COMP 256/L, 333.'"""
 

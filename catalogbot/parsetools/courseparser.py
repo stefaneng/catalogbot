@@ -54,6 +54,10 @@ def parse_em(courseitem, em_string):
 
     return courseitem
 
+def parse_prereqs_body(body):
+    m = re.search('Prerequisites:.*?\.', body)
+    return m.group(0)
+
 
 def parse_body(courseitem, body):
     courseitem['description'] = body
