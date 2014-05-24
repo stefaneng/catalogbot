@@ -2,6 +2,7 @@
 Assists in parsing text from the course pages.
 """
 import re
+from itertools import chain
 
 def parse_title(courseitem, title):
     """
@@ -46,9 +47,10 @@ def parse_em(courseitem, em_string):
     else:
         return courseitem
 
-    prereqs = parse_comma_string(preq_string)
+    prereqs = [parse_comma_string(c.strip(' '))
+               for c in preq_string.split(';')]
 
-    courseitem['prereqs'] = prereqs
+    courseitem['prereqs'] = list(chain.from_iterable(prereqs))
 
     return courseitem
 

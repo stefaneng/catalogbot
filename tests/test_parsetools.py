@@ -9,6 +9,19 @@ def test_parse_prereqs():
     em_tag = 'Prerequisites: COMP 256/L, 333.'
     out_courseitem = courseparser.parse_em(CourseItem(), em_tag)
 
+    print courseitem, out_courseitem
+
+    assert courseitem == out_courseitem
+
+def test_parse_prereq_semicolons():
+
+    test_string = 'Prerequisites: COMP 182/L; MATH 150A; PHIL 230.'
+    courseitem = CourseItem()
+    courseitem['prereqs'] = ['COMP 182/L', 'MATH 150A', 'PHIL 230']
+    out_courseitem = courseparser.parse_em(CourseItem(), test_string)
+
+    print courseitem, out_courseitem
+
     assert courseitem == out_courseitem
 
 def test_parse_title_empty():
