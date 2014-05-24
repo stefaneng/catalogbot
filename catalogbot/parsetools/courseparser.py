@@ -31,6 +31,23 @@ def parse_title(courseitem, title):
 
     return courseitem
 
+def parse_em(courseitem, em_string):
+    m = re.search(r':(.*?)\.', em_string)
+    if m:
+        preq_string = m.group(1).strip(' ')
+    else:
+        return courseitem
+
+    components = preq_string.split(',')
+    first = components[0]
+    course = first.split(' ')[0]
+
+    prereqs = [first] + [''.join([course, comp]) for comp in components[1:]]
+    courseitem['prereqs'] = prereqs
+
+    return courseitem
+
+
 def parse_body(courseitem, body):
     courseitem['description'] = body
     return courseitem

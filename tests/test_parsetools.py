@@ -1,6 +1,17 @@
 from catalogbot.parsetools import courseparser
 from catalogbot.items import CourseItem
 
+def test_parse_prereqs_em():
+    """Test the parsing of prerequisites from <em> tag"""
+
+    courseitem = CourseItem()
+    courseitem['prereqs'] = ['COMP 256/L', 'COMP 333']
+    em_tag = "Prerequisites: COMP 256/L, 333."
+    out_courseitem = courseparser.parse_em(CourseItem(), em_tag)
+
+    print courseitem, out_courseitem
+    assert courseitem == out_courseitem
+
 def test_parse_title_empty():
     """Test parsing an empty title"""
     courseitem = CourseItem()

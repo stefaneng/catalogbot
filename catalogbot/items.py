@@ -12,3 +12,4 @@ class CourseItem(Item):
     number = Field()
     longname = Field()
     units = Field()
+    prereqs = Field()
