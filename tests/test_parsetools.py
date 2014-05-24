@@ -1,6 +1,15 @@
 from catalogbot.parsetools import courses
 from catalogbot.items import CourseItem
 
+def test_parse_title_empty():
+    """Test parsing an empty title"""
+    courseitem = CourseItem()
+    coursetitle = ''
+    out_courseitem = courses.parse_title(courseitem, coursetitle)
+
+    assert courseitem == out_courseitem
+
+
 def test_parse_title():
     courseItem = CourseItem()
     courseItem['classname'] = 'COMP 310'

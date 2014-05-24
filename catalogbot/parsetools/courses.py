@@ -10,6 +10,10 @@ def parse_title(courseitem, title):
     """
 
     split_title = title.split(' ')
+
+    if len(split_title) <= 1:
+        return courseitem
+
     classname = " ".join(split_title[:2]).strip('.')
     rest_title = " ".join(split_title[2:])
     longname = rest_title.split('(')[0].strip()
