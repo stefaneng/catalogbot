@@ -14,3 +14,4 @@ class CourseItem(Item):
     units = Field()
     prereqs = Field()
     coreqs = Field()
+    prep = Field()
