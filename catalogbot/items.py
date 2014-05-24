@@ -13,3 +13,4 @@ class CourseItem(Item):
     longname = Field()
     units = Field()
     prereqs = Field()
+    coreqs = Field()

@@ -32,6 +32,7 @@ class CatalogSpider(Spider):
 
             course = parse_title(course, title)
             course = parse_prereqs(course, body)
+            course = parse_coreqs(course, body)
             course = parse_body(course, pbody)
 
             yield course

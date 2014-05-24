@@ -40,7 +40,7 @@ def parse_comma_string(comma_string):
 
     return name_number_list
 
-def parse_em(courseitem, em_string):
+def parse_em(courseitem, req_name, em_string):
     m = re.search(r':(.*?)\.', em_string)
     if m:
         preq_string = m.group(1).strip(' ')
@@ -50,14 +50,26 @@ def parse_em(courseitem, em_string):
     prereqs = [parse_comma_string(c.strip(' '))
                for c in preq_string.split(';')]
 
-    courseitem['prereqs'] = list(chain.from_iterable(prereqs))
+    courseitem[req_name] = list(chain.from_iterable(prereqs))
 
+    return courseitem
+
+def parse_coreqs(courseitem, body):
+    coreq_string = parse_coreqs_body(body)
+    courseitem = parse_em(courseitem, 'coreqs', coreq_string)
     return courseitem
 
 def parse_prereqs(courseitem, body):
     prereq_string = parse_prereqs_body(body)
-    courseitem = parse_em(courseitem, prereq_string)
+    courseitem = parse_em(courseitem, 'prereqs', prereq_string)
     return courseitem
+
+def parse_coreqs_body(body):
+    m = re.search(r'Corequisites{0,1}:.*?\.', body)
+    if m is not None:
+        return m.group(0)
+    else:
+        return ''
 
 def parse_prereqs_body(body):
     m = re.search(r'Prerequisites{0,1}:.*?\.', body)
@@ -66,11 +78,14 @@ def parse_prereqs_body(body):
     else:
         return ''
 
-
 def parse_body(courseitem, body):
     m = re.search(r'Prerequisites{0,1}:.*?\.\ (.*)', body)
     if m is not None:
         body = m.group(1)
+
+    m2 = re.search(r'Corequisites{0,1}:.*?\.\ (.*)', body)
+    if m2 is not None:
+        body = m2.group(1)
 
     courseitem['description'] = body
     return courseitem
