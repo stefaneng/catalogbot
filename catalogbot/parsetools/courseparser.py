@@ -70,14 +70,14 @@ def parse_prep(courseitem, body):
     return courseitem
 
 def parse_coreqs_body(body):
-    m = re.search(r'Corequisites{0,1}:.*?\.', body)
+    m = re.search(r'Coreq[a-z]+:.*?\.', body)
     if m is not None:
         return m.group(0)
     else:
         return ''
 
 def parse_prep_body(body):
-    m = re.search(r'Preparatory:.*?\.', body)
+    m = re.search(r'Prep[a-z]+:.*?\.', body)
     if m is not None:
         return m.group(0)
     else:
@@ -85,22 +85,22 @@ def parse_prep_body(body):
 
 
 def parse_prereqs_body(body):
-    m = re.search(r'Prerequisites{0,1}:.*?\.', body)
+    m = re.search(r'Prereq[a-z]+:.*?\.', body)
     if m is not None:
         return m.group(0)
     else:
         return ''
 
 def parse_body(courseitem, body):
-    m = re.search(r'Prerequisites{0,1}:.*?\.\ (.*)', body)
+    m = re.search(r'Prereq[a-z]+:.*?\.\ (.*)', body)
     if m is not None:
         body = m.group(1)
 
-    m2 = re.search(r'Corequisites{0,1}:.*?\.\ (.*)', body)
+    m2 = re.search(r'Coreq[a-z]+:.*?\.\ (.*)', body)
     if m2 is not None:
         body = m2.group(1)
 
-    m3 = re.search(r'Preparatory:.*?\.\ (.*)', body)
+    m3 = re.search(r'Prep[a-z]+:.*?\.\ (.*)', body)
     if m3 is not None:
         body = m3.group(1)
 
